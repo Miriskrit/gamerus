@@ -1,0 +1,114 @@
+/* main */
+.correctmain{
+    box-shadow: inset 0px 0px 35px 0px #86AC41;
+}
+.incorrectmain{
+    box-shadow: inset 0 0 35px 0 #A43820;
+}
+body{
+    background: #719492;
+}
+.navbar-dark{
+    background-color: #324851;
+}
+/* words */
+.btn{
+    box-shadow:  0 0 5px rgba(45,65,73,0.9);
+}
+
+.btn-light:hover{
+    color: aliceblue;
+    background-color: #34675C;
+    border-color: #324851;
+}
+.btn-light{
+    color: aliceblue;
+    background-color: #34675C;
+    border-color: #324851;
+}
+.correct { 
+    background-color: #86AC41; 
+    border: 2px solid #86AC41;
+    animation: correct 500ms alternate infinite;
+    border-color: #324851;
+}
+.incorrect{
+    box-shadow: inset 0 0 10px rgba(164, 56, 32, 0.678);
+    border: 2px solid rgba(164, 56, 32, 0.678);
+}
+.incorrect:hover{
+    box-shadow: inset 0 0 10px rgba(164, 56, 32, 0.678);
+    background-color: #719492;
+    border: 2px solid rgba(164, 56, 32, 0.678);
+}
+    
+@keyframes correct {
+    from {
+    background-color: #7DA3A1;
+    }
+    to {
+    background-color: #86AC41;
+    }
+}
+
+/* info */
+.badge-success{
+    background-color: #86AC41;
+}
+.badge-danger{
+    background-color:#A43820;
+}
+.infocintainer{
+    border-bottom:5px solid #324851;
+}
+.correctcount{
+    animation: correctcount 500ms alternate infinite;
+}
+@keyframes correctcount {
+    from {
+    background-color: #86AC41;
+    }
+    to {
+    background-color: #6D8B34;
+    }
+}
+.incorrectcount{
+    animation: incorrectcount 500ms alternate infinite;
+}
+@keyframes incorrectcount {
+    from {
+    background-color: #95331D;
+    }
+    to {
+    background-color: #622213;
+    }
+}
+
+
+
+/* WORDS LIST */
+
+.words_list_span{
+    color: azure;
+    background-color: #34675C;
+}
+.navigation a{
+    color: aliceblue;
+    background-color: #324851;
+    border-color: #34675C;
+}
+/* games styles */
+
+.gamewordmain{
+    border: solid 3px #324851;
+}
+
+/* PROFILE */
+
+.table{
+    background-color:#293B42;
+    color: aliceblue;
+}
+tr:hover{
+    background-color: #34675C;
+}

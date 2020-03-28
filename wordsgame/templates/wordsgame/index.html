@@ -1,0 +1,61 @@
+{% extends 'wordsgame/base.html' %}
+{% load static %}
+
+{% block title %}
+Game|Main page
+{% endblock %}
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        {% include 'wordsgame/includes/profilenav.html' %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <div class="card-body">
+        <a href="{% url 'random_game_url' %}" class="btn nav-link text-white h1">ИГРАТЬ</a>
+        <hr>
+        <br>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'main_game_url' %}" class="btn nav-link text-white">"Ударения"</a>
+    </div>
+</div>
+<div class="row">
+    <div class="card-body card-body-small">
+        <a href="{% url 'ova_game_url' %}" class="btn nav-link text-white">"ова/ева"</a>
+    </div>
+    <div class="card-body card-body-small">
+        <a href="{% url 'pre_game_url' %}" class="btn nav-link text-white">"пре/при"</a>
+    </div>
+</div>
+<div class="row">
+    <div class="card-body card-body-small">
+        <a href="{% url 'znak_game_url' %}" class="btn nav-link text-white">"ъ/ъ"</a>
+    </div>
+    <div class="card-body card-body-small">
+        <a href="{% url 'ii_game_url' %}" class="btn nav-link text-white">"и/ы"</a>
+    </div>
+</div>
+<div class="row">
+    <div class="card-body card-body-small">
+        <a href="{% url 'chi_game_url' %}" class="btn nav-link text-white">"чик/щик"</a>
+    </div>
+    <div class="card-body card-body-small">
+        <a href="{% url 'oyo_game_url' %}" class="btn nav-link text-white">"о/ё"</a>
+    </div>
+</div>
+
+<div class="row">
+    <hr>
+    <div class="card-body">
+        <h5>Полезное</h5>
+        <a href="{% url 'words_list_url' %}" class="btn nav-link text-white">список слов</a>
+    </div>
+</div>
+
+{% endblock %}

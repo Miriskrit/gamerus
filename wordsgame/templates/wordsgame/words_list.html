@@ -1,0 +1,86 @@
+{% extends 'wordsgame/base.html' %}
+{% load static %}
+
+{% block title %}
+Words|django
+{% endblock %}
+
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link btn" href="{% url 'index_page_url' %}">На главную</a>
+        </li>
+    </ul>
+    {% include 'wordsgame/includes/profilenav.html' %}
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="row navrow">
+    <div class="form-inline my-2 my-lg-0">
+        <input id="forminput" class="form-control mr-sm-2" type="search" placeholder="{% if srch %}{{ srch }}{% else %}Поиск{% endif %}" aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onclick="search()">Найти</button>
+        <a class="btn btn-outline-light my-2 my-sm-0 ml-3"  href="{% url 'words_list_url' %}">Все слова</a>
+        <script>
+            "use strict";
+            function search(){
+                let s = document.getElementById('forminput');
+                let txt = s.value;
+                let locate = "{% url 'words_list_url' %}"
+                document.location.href=locate + "?search=" + txt;
+            }
+        </script>
+    </div>
+</div>
+
+
+{% if is_paginated %}
+<div class="row navrow">
+    <div class="navigation">
+            <ul class="pagination pagination">
+                <li class="page-item {% if not prev_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="true">&#8249;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link {% if not prev_url %} disabled {% endif %}" href="?page={{ 1 }}" aria-disabled="true">..</a>
+                </li>
+                {% for n in page_object.paginator.page_range %}
+
+                {% if  page_object.number == n %}
+
+                <li class="page-item active"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+
+                {% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+
+                <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+
+                {% endif %}
+
+
+                {% endfor %}
+                <li class="page-item">
+                    <a class="page-link {% if not next_url  %} disabled {% endif %}" href="?page={{ 10 }}" aria-disabled="true">..</a>
+                </li>
+                <li class="page-item {% if not next_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ next_url }}">&#8250;</a>
+                </li>
+            </ul>
+    </div>
+</div>
+
+<div class="container-fluid words_list_main">
+    {% for word in page_object.object_list %}
+            <p class="words_list_span">{{ word }}</p>
+    {% endfor %}
+</div>
+{% else %}
+<div class="container-fluid words_list_main">
+    {% for word in words %}
+            <p class="words_list_span">{{ word }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

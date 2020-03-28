@@ -1,0 +1,118 @@
+<script>
+    let word = '';
+    let c = '';
+
+    document.getElementById('correctcount').innerText = '0';
+    document.getElementById('incorrectcount').innerText = '0';
+
+
+    let main = function (answer, text, word) {
+        let xhr = new XMLHttpRequest();
+        const params = "csrfmiddlewaretoken={{ csrf_token }}&refresh=true";
+        xhr.open("POST", url, true);
+        xhr.responseType = "json"
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.addEventListener("readystatechange", () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('gamewordmain').innerText = xhr.response.word;
+                word = xhr.response.word;
+                c = xhr.response.c;
+                if (url == "{% url 'random_game_url' %}") {
+                    create_body(c);
+                };
+            };
+        });
+        xhr.send(params);
+    };
+    main();
+
+
+    function iscorrect(i, id) {
+        let correctcount = document.getElementById('correctcount');
+        let incorrectcount = document.getElementById('incorrectcount');
+        if (correctcount.innerText == '') {
+            correctcount.innerText = '0';
+        };
+        if (incorrectcount.innerText == '') {
+            incorrectcount.innerText = '0';
+        };
+        let correctvalue = Number(correctcount.innerText);
+        let incorrectvalue = Number(incorrectcount.innerText);
+
+
+        let ajax_post = function (answer) {
+            const request = new XMLHttpRequest();
+            const url = "{{ request.user.get_absolute_url }}";
+            const params = "csrfmiddlewaretoken={{ csrf_token }}&answer=" + answer + '&youranswer=' + document.getElementById('gamewordmain').innerText + '&correct=' + c;
+            request.open("POST", url, true);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(params);
+        };
+
+        let clean_words = function () {
+            document.getElementById(id).classList.remove('correct');
+            document.getElementById('correctcount').classList.remove('correctcount')
+            document.getElementById("main").classList.remove('correctmain');
+            document.getElementById(id).classList.remove('incorrect');
+            document.getElementById('incorrectcount').classList.remove('incorrectcount')
+            document.getElementById("main").classList.remove('incorrectmain');
+        };
+
+
+        let update_progress = function () {
+            let percent = String(Math.floor(correctvalue / (incorrectvalue + correctvalue) * 100));
+                if (percent == 'NaN'){
+                    percent = '100';
+                };
+                document.getElementById('progressbar').value = percent;
+                document.getElementById('progresspercent').innerText = percent;
+        };
+
+        if (i == true) {
+            document.getElementById(id).classList.add('correct');
+            document.getElementById('correctcount').classList.add('correctcount')
+            document.getElementById("main").classList.add('correctmain');
+            setTimeout(function () {
+                ajax_post('correct');
+                correctcount.innerText = String(++correctvalue);
+                update_progress();
+                clean_words();
+                main();
+            }, 1000);
+        } else {
+            document.getElementById(id).classList.add('incorrect');
+            document.getElementById('incorrectcount').classList.add('incorrectcount')
+            document.getElementById("main").classList.add('incorrectmain');
+            setTimeout(function () {
+                ajax_post('incorrect');
+                incorrectcount.innerText = String(++incorrectvalue);
+                update_progress();
+                clean_words();
+                main();
+            }, 2500);
+        }
+    };
+
+
+
+
+    // при нажатии кнопки
+    function check(current_value, id) {
+        if (c == current_value) {
+            if (id == '1') {
+                iscorrect(true, '1');
+            } else {
+                iscorrect(true, '2');
+            };
+
+        } else {
+            if (id == '1') {
+                iscorrect(false, '1');
+            } else {
+                iscorrect(false, '2');
+            };
+        };
+    };
+
+
+</script>

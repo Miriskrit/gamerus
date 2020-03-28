@@ -1,0 +1,14 @@
+<ul class="navbar-nav">
+    {% if request.user.is_authenticated %}
+    <li>
+        <a class="nav-link btn" href="{{ request.user.get_absolute_url }}">{{ request.user.username }}</a>
+    </li>
+    {% else %}
+    <li>
+        <a class="btn nav-link btn-light" href="{% url 'login_url' %}">Авторизация</a>
+    </li>
+    <li>
+        <a class="btn nav-link btn-light" href="{% url 'auth_url' %}">Регистрация</a>
+    </li>
+    {% endif %}
+</ul>

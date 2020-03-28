@@ -1,0 +1,138 @@
+/* main */
+.correctmain{
+    box-shadow: inset 0px 0px 35px 0px #86AC41;
+}
+.incorrectmain{
+    box-shadow: inset 0 0 35px 0 #A43820;
+}
+body{
+    background: #000A11;
+}
+.navbar-dark{
+    background-color: black;
+}
+/* words */
+.btn{
+    box-shadow:  0 0 5px rgba(45,65,73,0.9);
+}
+.btn-light:hover{
+    color: aliceblue;
+    background-color: black;
+    border-color: aliceblue;
+}
+.btn-light{
+    color: aliceblue;
+    background-color: black;
+    border-color: aliceblue;
+}
+.correct { 
+    background-color: black; 
+    border: 2px solid #86AC41;
+    animation: correct 500ms alternate infinite;
+    border-color: #324851;
+}
+.incorrect{
+    box-shadow: inset 0 0 10px rgba(164, 56, 32, 0.678);
+    border: 2px solid rgba(164, 56, 32, 0.678);
+}
+.incorrect:hover{
+    box-shadow: inset 0 0 10px rgba(164, 56, 32, 0.678);
+    background-color: black;
+    border: 2px solid rgba(164, 56, 32, 0.678);
+}
+    
+@keyframes correct {
+    from {
+    border-color: #7DA3A1;
+    }
+    to {
+    border-color: #86AC41;
+    }
+}
+
+
+.progress {
+    text-align: center;
+    display: block;
+    height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    background-color: black;
+    color: aliceblue;
+}
+progress::-webkit-progress-value{ 
+    -webkit-appearance: none;
+    background: #86AC41;
+}
+
+/* info */
+.badge{
+    color: aliceblue;
+}
+.badge-success{
+    background-color: #00080E;
+}
+.badge-danger{
+    background-color:#00080E;
+}
+.infocintainer{
+    border-bottom:5px solid aliceblue;
+}
+.correctcount{
+    box-shadow: 0 0 3px 0 #86AC41;
+    animation: correctcount 500ms alternate infinite;
+    outline:2px solid aliceblue;
+    outline-offset:-2px;
+}
+@keyframes correctcount {
+    from {
+    outline-color: #86AC41;
+    }
+    to {
+    outline-color: #6D8B34;
+    }
+}
+.incorrectcount{
+    box-shadow: 0 0 3px 0 #95331D;
+    animation: incorrectcount 500ms alternate infinite;
+    outline:2px solid aliceblue;
+    outline-offset:-2px;
+}
+@keyframes incorrectcount {
+    from {
+    outline-color: #95331D;
+    }
+    to {
+    outline-color: #622213;
+    }
+}
+
+
+
+/* WORDS LIST */
+
+.words_list_span{
+    color: azure;
+    background-color: black;
+}
+.navigation a{
+    color: aliceblue;
+    background-color: #324851;
+    border-color: #34675C;
+}
+/* games styles */
+
+.gamewordmain{
+    border: solid 3px aliceblue;
+    color: aliceblue;
+}
+
+/* PROFILE */
+
+.table{
+    background-color:black;
+    color: aliceblue;
+}
+tr:hover{
+    background-color: #000A11;
+}

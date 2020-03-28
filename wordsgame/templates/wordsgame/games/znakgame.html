@@ -1,0 +1,34 @@
+{% extends 'wordsgame/base.html' %}
+{% load static %}
+
+{% block title %}
+Game|django
+{% endblock %}
+
+
+{% block navbar %}
+{% include 'wordsgame/includes/navprogress.html' %}
+{% endblock %}
+
+
+
+{% block content %}
+{% include 'wordsgame/includes/counter.html' %}
+
+
+
+<div class="container-md" id="mainwords" style="text-align:center;">
+    <h5 class="gamewordmain" id='gamewordmain'></h5>
+    <div class="btn btn-light btn-lg gamebtn" onclick="check('ь', '1')" id="1">ь</div>
+    <div class="btn btn-light btn-lg gamebtn" onclick="check('ъ', '2')" id="2">ъ</div>
+</div>
+
+
+<script>
+    "use strict";
+    let url = "{% url 'znak_game_url' %}";
+</script>
+{% include 'wordsgame/includes/gamelogic.html' %}
+
+
+{% endblock %}

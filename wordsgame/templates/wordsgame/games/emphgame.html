@@ -1,0 +1,147 @@
+{% extends 'wordsgame/base.html' %}
+{% load static %}
+
+{% block title %}
+Game|django
+{% endblock %}
+
+
+{% block navbar %}
+{% include 'wordsgame/includes/navprogress.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'wordsgame/includes/counter.html' %}
+
+
+<div class="container-md" id="mainwords">
+
+</div>
+
+<script>
+    "use strict";
+    let main = function (answer, text, word) {
+        let xhr = new XMLHttpRequest();
+        const url = "{% url 'main_game_url' %}";
+        const params = "csrfmiddlewaretoken={{ csrf_token }}&refresh=true";
+        xhr.open("POST", url, true);
+        xhr.responseType = "text"
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.addEventListener("readystatechange", () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                main_function(xhr.responseText);
+           }
+        });
+        xhr.send(params);
+
+
+    };
+    main();
+
+    let main_function = function(main_word){
+        let correctcount = document.getElementById('correctcount');
+        let incorrectcount = document.getElementById('incorrectcount');
+        if (correctcount.innerText == ''){
+            correctcount.innerText = '0';
+        };
+        if (incorrectcount.innerText == ''){
+            incorrectcount.innerText = '0';
+        };
+        let correctvalue = Number(correctcount.innerText);
+        let incorrectvalue = Number(incorrectcount.innerText);
+
+        if (incorrectvalue != 0) {
+            let percent = String(Math.floor(correctvalue / (incorrectvalue + correctvalue) * 100))
+            document.getElementById('progressbar').value = percent;
+            document.getElementById('progresspercent').innerText = percent;
+        };
+
+
+        let word = main_word;
+        let correct_id = 0;
+        let mainpage = document.getElementById('mainwords');
+
+        let iscorrect = function funcs() {
+            let ajax_post = function (answer, text, word) {
+                //{% if request.user.is_authenticated %}
+                const request = new XMLHttpRequest();
+                const url = "{{ request.user.get_absolute_url }}";
+                const params = "csrfmiddlewaretoken={{ csrf_token }}&answer=" + answer + '&youranswer=' + text + '&correct=' + word;
+                request.open("POST", url, true);
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                request.addEventListener("readystatechange", () => {
+                    if (request.readyState !== 4 && request.status !== 200) {
+                        alert('ошибка')
+                    }
+                });
+                request.send(params);
+                //{% else %}
+                console.log('Зарегестрируйтесь');
+                //{% endif %}
+            };
+            
+            let clean_words = function(){
+                let all_words = document.querySelectorAll('.word');
+                all_words.forEach( e => e.remove() );
+
+                document.getElementById('correctcount').classList.remove('correctcount');
+                document.getElementById('incorrectcount').classList.remove('incorrectcount');
+
+                document.getElementById("main").classList.remove('correctmain');
+                document.getElementById("main").classList.remove('incorrectmain');
+            };
+
+
+            let t = this.innerText
+            if (t == word) {
+                this.classList.add('correct');
+                document.getElementById('correctcount').classList.add('correctcount')
+                document.getElementById("main").classList.add('correctmain');
+                setTimeout(function () {
+                    correctcount.innerText = String(correctvalue + 1);
+                    ajax_post('correct', t, word);
+                    clean_words();
+                    main();
+                }, 1000);
+            } else {
+                this.classList.add('incorrect');
+                document.getElementById('incorrectcount').classList.add('incorrectcount')
+                document.getElementById("main").classList.add('incorrectmain');
+                let elem = document.getElementById(correct_id);
+                elem.classList.add('correct');
+                setTimeout(function () {
+                    incorrectcount.innerText = String(incorrectvalue + 1);
+                    ajax_post('incorrect', t, word);
+                    clean_words()
+                    main();
+                }, 2500);
+            }
+        };
+
+        let wd = word.toLocaleLowerCase();
+        let glasnie = ['у', 'е', 'ы', 'а', 'о', 'э', 'я', 'и', 'ё', 'ю'];
+
+        for (let i = 0; i <= word.length; i++) {
+            if (i != null) {
+                if (word[i] != undefined) {
+                    if (glasnie.indexOf(word[i].toLocaleLowerCase()) != -1) {
+                        let rez = wd.substr(0, i) + wd[i].toLocaleUpperCase() + wd.substr(i + 1, word.length);
+                        let div = document.createElement("div");
+                        div.id = i;
+                        div.innerText = rez;
+                        if (div.innerText == word) {
+                            correct_id = i
+                        };
+                        div.classList.add('word', 'btn', 'btn-light', 'btn-lg');
+                        div.addEventListener("click", iscorrect, false);
+                        document.getElementById('mainwords').append(div);
+                    };
+                };
+
+            };
+        };
+    };
+
+</script>
+
+{% endblock %}

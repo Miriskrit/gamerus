@@ -1,0 +1,61 @@
+{% extends 'wordsgame/base.html' %}
+{% load static %}
+
+{% block title %}
+Profile|django
+{% endblock %}
+
+
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link btn" href="{% url 'index_page_url' %}">На главную</a>
+        </li>
+    </ul>
+    {% include 'wordsgame/includes/profilenav.html' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1 id="username">{{ profile.username }}</h1>
+
+<div style="text-align: center;"><a class="btn btn-outline-danger" href="{% url 'logout_url' %}">Выйти</a></div>
+
+<div class="container statistic">
+    <div class="badge-success btn st-elem">
+        <h5>Правильные отеты:<br>{{ profile.static_correct }}</h5>
+    </div>
+    <div class="badge-danger btn st-elem">
+        <h5>Ошибки:<br>{{ profile.static_wrong }}</h5>
+    </div>
+</div>
+
+
+
+
+<div id="tableblock">
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Ошибка</th>
+                    <th>Правильно</th>
+                    <th>X</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mist in mistakes %}
+                <tr>
+                    <td>{{ mist.your_answer }}</td>
+                    <td>{{ mist.correct_answer }}</td>
+                    <td scope="row">{{ mist.count }}</td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
